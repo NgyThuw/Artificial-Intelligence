@@ -17,14 +17,16 @@ TSP/
 └── README.md           # Tài liệu mô tả dự án
 ```
 ## 🧠 Các phương pháp sử dụng
-Phương pháp	Mô tả ngắn gọn	Độ chính xác	Tốc độ
-Nearest Neighbor	Chọn thành phố gần nhất tiếp theo	Gần đúng	Rất nhanh
-2-opt cải thiện	Đảo ngược đoạn đường để giảm chi phí	Gần đúng tốt	Trung bình
-Held–Karp (DP)	Quy hoạch động với bitmask	Tối ưu	Chậm hơn
+
+| Phương pháp        | Mô tả ngắn gọn                           | Độ chính xác | Tốc độ    |
+|--------------------|------------------------------------------|--------------|-----------|
+| Nearest Neighbor   | Chọn thành phố gần nhất tiếp theo        | Gần đúng     | Rất nhanh |
+| Held–Karp (DP)     | Quy hoạch động với bitmask               | Tối ưu       | Chậm hơn  |
 
 ## 📦 Yêu cầu thư viện
+```
 pip install matplotlib
-
+```
 ## 📌 Ghi chú
 Các file JSON cần đặt đúng trong thư mục data/.
 Nếu gặp lỗi FileNotFoundError, kiểm tra lại đường dẫn hoặc dùng ../data/filename.json trong main.py.
