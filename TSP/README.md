@@ -1,1 +1,36 @@
+# 🧭 Travelling Salesman Problem (TSP) – Python Implementation
+### 📌 Mô tả bài toán 
+Bài toán người bán hàng (TSP) yêu cầu tìm chu trình ngắn nhất đi qua tất cả các thành phố đúng một lần và quay về điểm xuất phát. Đây là một bài toán tối ưu kinh điển trong AI và toán học.
 
+### 📁 Cấu trúc thư mục
+```
+TSP/
+├── data/               # Chứa các file JSON với ma trận chi phí
+│   ├── matrix4.json
+│   ├── matrix5.json
+│   └── matrix6.json
+├── src/                # Chứa mã nguồn chính
+│   ├── heuristic.py    # Thuật toán Nearest Neighbor
+│   ├── dynamic.py      # Thuật toán Held–Karp (quy hoạch động)
+│   ├── utils.py        # Hàm đọc file JSON và tiện ích
+│   └── main.py         # Chương trình chính: chạy và vẽ minh họa
+└── README.md           # Tài liệu mô tả dự án
+```
+### 🧠 Các phương pháp sử dụng
+Phương pháp	Mô tả ngắn gọn	Độ chính xác	Tốc độ
+Nearest Neighbor	Chọn thành phố gần nhất tiếp theo	Gần đúng	Rất nhanh
+2-opt cải thiện	Đảo ngược đoạn đường để giảm chi phí	Gần đúng tốt	Trung bình
+Held–Karp (DP)	Quy hoạch động với bitmask	Tối ưu	Chậm hơn
+
+### 📦 Yêu cầu thư viện
+pip install matplotlib
+
+### 📌 Ghi chú
+Các file JSON cần đặt đúng trong thư mục data/.
+Nếu gặp lỗi FileNotFoundError, kiểm tra lại đường dẫn hoặc dùng ../data/filename.json trong main.py.
+
+### ✨ Ví dụ minh họa
+Với dữ liệu matrix4.json, chương trình sẽ in ra route và chi phí của từng phương pháp.
+Biểu đồ minh họa sẽ hiển thị các thành phố và tuyến đường bằng màu khác nhau:
+Xanh: Nearest Neighbor
+Đỏ: Held–Karp (tối ưu)
