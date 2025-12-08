@@ -84,126 +84,6 @@ def GetAvailableCells(board):
     return available
 ```
 
-## 🚀 Tối ưu hóa với Alpha-Beta + Heuristic
-
-#### Giai đoạn 1: Alpha-Beta + Giới hạn Độ sâu
-
-    def advanced_minimax(board, depth, alpha, beta, isMaximizing, max_depth=3):
-    if depth >= max_depth:
-        return evaluate_board_heuristic(board)
-    
-    winner = GetWinner(board)
-    if winner is not None:
-        return 10000 - depth if winner == "X" else -10000 + depth
-    
-    available = GetAvailableCells(board)
-    if not available:
-        return 0
-    
-    ordered_moves = order_moves_by_priority(board, available, isMaximizing)
-    
-    if isMaximizing:
-        best_score = -math.inf
-        for move in ordered_moves:
-            i, j = flat_index_to_board(move, len(board))
-            board[i][j] = "X"
-            score = advanced_minimax(board, depth+1, alpha, beta, False, max_depth)
-            board[i][j] = ' '
-            best_score = max(best_score, score)
-            alpha = max(alpha, score)
-            if beta <= alpha:
-                break
-        return best_score
-    else:
-        # Tương tự cho minimizing player
-
-
-#### Giai đoạn 2: Thêm Heuristic Đánh giá
-
-        def evaluate_board_heuristic(board):
-            score = 0
-            size = len(board)
-            for i in range(size):
-                for j in range(size):
-                    if board[i][j] != ' ':
-                        score += evaluate_position(board, i, j)
-            return score
-
-        def evaluate_position(board, i, j):
-            player = board[i][j]
-            multiplier = 1 if player == "X" else -1
-            score = 0
-            directions = [(0,1), (1,0), (1,1), (1,-1)]
-    
-            for dx, dy in directions:
-                sequence_score = evaluate_sequence(board, i, j, dx, dy, player)
-                score += sequence_score
-    
-            return score * multiplier
-
-        def evaluate_sequence(board, i, j, dx, dy, player):
-            # Logic đếm pattern
-            if count == 5: return 100000    # Thắng
-            if count == 4: 
-                if open_ends == 2: return 10000   # 4 đầu mở
-                if open_ends == 1: return 1000    # 4 một đầu mở
-            if count == 3:
-                if open_ends == 2: return 500     # 3 đầu mở
-                if open_ends == 1: return 100     # 3 một đầu mở
-            if count == 2:
-                if open_ends == 2: return 50      # 2 đầu mở
-            return 0
-
-#### Giai đoạn 3: Sắp xếp Nước đi Thông minh
-
-        def order_moves_by_priority(board, moves, isMaximizing):
-            scored_moves = []
-            size = len(board)
-    
-            for move in moves:
-                i, j = flat_index_to_board(move, size)
-                score = 0
-        
-                # Ưu tiên trung tâm
-                center = size // 2
-                distance_from_center = abs(i - center) + abs(j - center)
-                score += (size - distance_from_center) * 10
-        
-                # Ưu tiên gần quân đã có
-                score += count_adjacent_pieces(board, i, j) * 100
-        
-                # Ưu tiên tấn công/phòng thủ
-                if isMaximizing:
-                    score += evaluate_attack_potential(board, i, j, "X") * 1000
-                else:
-                    score += evaluate_attack_potential(board, i, j, "O") * 1000
-        
-                scored_moves.append((score, move))
-    
-            scored_moves.sort(reverse=True, key=lambda x: x[0])
-            return [move for _, move in scored_moves]
-
-#### Giai đoạn 4: Giới hạn Vùng Tìm kiếm
-```python
-def get_relevant_moves(board, last_move=None, radius=2):
-    """Chỉ xét nước đi trong bán kính quanh các quân cờ hiện có"""
-    size = len(board)
-    if last_move is None:
-        return [board_to_flat_index(size//2, size//2, size)]
-    
-    relevant_moves = set()
-    occupied_positions = get_occupied_positions(board)
-    
-    for i, j in occupied_positions:
-        for di in range(-radius, radius+1):
-            for dj in range(-radius, radius+1):
-                ni, nj = i + di, j + dj
-                if 0 <= ni < size and 0 <= nj < size and board[ni][nj] == ' ':
-                    relevant_moves.add(board_to_flat_index(ni, nj, size))
-    
-    return list(relevant_moves)
-```
-
 ## 💡 Kết luận
 Việc kết hợp **Cắt tỉa Alpha-Beta** với **Heuristic evaluation** và các kỹ thuật tối ưu hóa cho phép xử lý hiệu quả các bàn cờ lớn mà vẫn đảm bảo chất lượng nước đi tối ưu.
 Hiệu suất giữa đọc danh sách cạnh và ma trận kề
@@ -251,6 +131,7 @@ Bước 2: Hạ bậc đỉnh 3 về 0 và các đỉnh liền kề nó xuống 
 Bước 1: Chọn ngẫu nhiên một đỉnh bậc 2 ( do cùng bậc 2), chọn đỉnh 1 và tô màu khác với màu đỉnh 3 
 (nếu chọn màu giống như màu đỉnh 3 thì sẽ vi phạm ràng buộc)
 Bước 2: Hạ bậc đỉnh 1 về 0 và các đỉnh liền kề bị hạ bậc là 
+
 
 
 
