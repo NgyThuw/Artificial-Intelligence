@@ -19,9 +19,6 @@ Color_Graphing/
 ├── src/               # Mã nguồn chính
 │   ├── MinhHoa.py     # Script minh họa trực quan
 │   ├── ToMauDoThi.py  # Thuật toán tô màu đồ thị
-│   ├── utils.py       # Hàm tiện ích: đọc file, xử lý dữ liệu
-│   ├── plotting.py    # Các hàm vẽ biểu đồ với matplotlib
-│   └── color_map.py   # Định nghĩa bảng màu, quy tắc tô màu
 └── README.md          # Tài liệu mô tả dự án
 ```
 
